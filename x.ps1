@@ -122,4 +122,4 @@ foreach-object {
         }
     }
 } |
-export-csv "./flat_files$($path)-flat.csv" -verbose
+export-csv "$($path)-flat.csv" -verbose
