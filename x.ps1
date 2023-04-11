@@ -1,7 +1,7 @@
 #
 # pwsh -file x.ps1 -path ./aws-report.csv
 #
-param($path = '.csv_files/data.csv')
+param($path = './aws-report.csv')
 
 ## pass 1 parameters
 $record_type = 'header'
@@ -122,4 +122,4 @@ foreach-object {
         }
     }
 } |
-export-csv "$($path)-flat.csv" -verbose
+export-csv "./flat_files$($path)-flat.csv" -verbose
