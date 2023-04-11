@@ -22,10 +22,21 @@ with sqlite3.connect('mydatabase.db') as conn:
         cursor.execute('ALTER TABLE t ADD COLUMN vendor TEXT')
 
     # import CSV file into the table
-    with open('./csv_files/data.csv-flat.csv') as f:
-        reader = csv.reader(f)
+    with open('test-flat.csv') as f:
+        reader = csv.DictReader(f)
         for row in reader:
-            cursor.execute('INSERT INTO t (Instances, Current_Status, Outages, Downtime, Uptime, Total_Time, Availability, Tags) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', row)
+            instances = row['Instances']
+            current_status = row['Current_Status']
+            outages = row['Outages']
+            downtime = row['Downtime']
+            uptime = row['Uptime']
+            total_time = row['Total_Time']
+            availability = row['Availability']
+            tags = row['Tags']
+
+            # insert the extracted fields into the database table
+            cursor.execute('INSERT INTO t (Instances, Current_Status, Outages, Downtime, Uptime, Total_Time, Availability, Tags) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+                        (instances, current_status, outages, downtime, uptime, total_time, availability, tags))
 
     # update values in the table
     cursor.execute("UPDATE t SET month_year = '04-2023', vendor = 'aws'")
